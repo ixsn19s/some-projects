@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './components/navbar'
+import Navbar from './components/Navbar'
 import ContactHeader from './components/ContactHeader'
 import ContactForm from './components/ContactForm'
 

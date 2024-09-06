@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TotalScore from './TotalScore'
 import NumberSelect from './NumberSelect'
 import DiceRoll from './diceRoll'
+import ShowRules from './ShowRules';
 
 
 const GamePlay = () => {
@@ -10,6 +11,7 @@ const GamePlay = () => {
     const [selectedNum, setSelectedNum] = useState();
     const [currentDice, setCurrentDice] = useState(1);
     const [error, setError] = useState("");
+    const [Rules, setRules] = useState(false);
 
     const generateRandNum = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -34,6 +36,10 @@ const GamePlay = () => {
         setSelectedNum(undefined);
     };
 
+    const resetScore = () => {
+        setScore(0);
+    }
+
 
   return (
 
@@ -49,6 +55,29 @@ const GamePlay = () => {
        </div>
 
         <DiceRoll currentDice={currentDice} rollDice={rollDice}/>
+
+
+        <div className='flex flex-col items-center mt-4'>
+
+        <button 
+         onClick={resetScore}
+         className='bg-zinc-50 mt-3 text-black px-8 py-1 rounded-md text-lg hover:bg-black border border-black hover:border-white hover:outline-none hover:text-white '>
+            Reset Score
+        </button >
+
+        <button
+         onClick={ () => setRules ( prev => !prev)}
+         className='bg-zinc-800 mt-3 text-white px-8 py-1 rounded-md text-lg hover:bg-white border hover:border-black hover:outline-none hover:text-black  '> 
+           {Rules ? "Hide" : "Show"} Rules
+        </button>
+
+
+        </div>
+        {Rules && <ShowRules />}
+
+     
+
+
     </div>
   )
 }
