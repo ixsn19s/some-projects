@@ -1,0 +1,40 @@
+import { deleteDoc, doc } from 'firebase/firestore/lite';
+import React from 'react';
+import { HiOutlineUserCircle } from "react-icons/hi";
+import { MdDeleteForever } from "react-icons/md";
+import { TbEditCircle } from "react-icons/tb";
+import { db } from '../config/firebase';
+import useCustomHook from '../hooks/useCustomHook';
+import ModalCard from './Modal/ModalCard';
+
+const ContactCard = ({ contact }) => {
+
+  const { isOpen, onClose, onOpen } = useCustomHook();
+
+  const delBtn = async (id) => {
+    try {
+      await deleteDoc(doc(db, "contacts", id));  // Deletes the document by ID
+    } catch (error) {
+      console.log(error);  // Error handling in case deletion fails
+    }
+  };
+
+  return (
+    <>
+      <div className='flex bg-yellow-100 p-3 rounded-md text-xl '>
+        <HiOutlineUserCircle className='text-orange-600 text-5xl' />
+        <div className='flex-1 mx-4'>
+          <h2 className='text-lg font-semibold '>{contact.name}</h2>
+          <p className='text-sm text-gray-600 '>{contact.email}</p>
+        </div>
+        <div className='flex gap-1'>
+          <TbEditCircle onClick={onOpen} className='text-zinc-700 text-4xl cursor-pointer' />
+          <MdDeleteForever onClick={() => delBtn(contact.id)} className='text-blue-800 text-4xl cursor-pointer' />
+        </div>
+      </div>
+      <ModalCard isOpen={isOpen} onClose={onClose} />
+    </>
+  );
+};
+
+export default ContactCard;
